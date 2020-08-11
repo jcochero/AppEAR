@@ -11,6 +11,7 @@ anywheresoftware.b4a.keywords.LayoutBuilder.setScaleRate(0.3);
 ((anywheresoftware.b4a.keywords.LayoutBuilder.DesignerTextSizeMethod)views.get("btnshare").vw).setTextSize((float)(16d));
 ((anywheresoftware.b4a.keywords.LayoutBuilder.DesignerTextSizeMethod)views.get("btnshareothers").vw).setTextSize((float)(10d));
 ((anywheresoftware.b4a.keywords.LayoutBuilder.DesignerTextSizeMethod)views.get("lblnocompartir").vw).setTextSize((float)(10d));
+views.get("imgbadge").vw.setLeft((int)((50d / 100 * width)-((views.get("imgbadge").vw.getWidth())/2d)));
 ((anywheresoftware.b4a.keywords.LayoutBuilder.DesignerTextSizeMethod)views.get("lbltitulo").vw).setTextSize((float)(18d));
 
 }

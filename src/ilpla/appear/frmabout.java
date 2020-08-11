@@ -25,13 +25,15 @@ public class frmabout extends Activity implements B4AActivity{
     ActivityWrapper _activity;
     java.util.ArrayList<B4AMenuItem> menuItems;
 	public static final boolean fullScreen = false;
-	public static final boolean includeTitle = true;
+	public static final boolean includeTitle = false;
     public static WeakReference<Activity> previousOne;
+    public static boolean dontPause;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (isFirst) {
+        mostCurrent = this;
+		if (processBA == null) {
 			processBA = new BA(this.getApplicationContext(), null, null, "ilpla.appear", "ilpla.appear.frmabout");
 			processBA.loadHtSubs(this.getClass());
 	        float deviceScale = getApplicationContext().getResources().getDisplayMetrics().density;
@@ -45,6 +47,7 @@ public class frmabout extends Activity implements B4AActivity{
 				p.finish();
 			}
 		}
+        processBA.setActivityPaused(true);
         processBA.runHook("oncreate", this, null);
 		if (!includeTitle) {
         	this.getWindow().requestFeature(android.view.Window.FEATURE_NO_TITLE);
@@ -53,13 +56,13 @@ public class frmabout extends Activity implements B4AActivity{
         	getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN,   
         			android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-		mostCurrent = this;
+		
         processBA.sharedProcessBA.activityBA = null;
 		layout = new BALayout(this);
 		setContentView(layout);
 		afterFirstLayout = false;
         WaitForLayout wl = new WaitForLayout();
-        if (anywheresoftware.b4a.objects.ServiceHelper.StarterHelper.startFromActivity(processBA, wl, true))
+        if (anywheresoftware.b4a.objects.ServiceHelper.StarterHelper.startFromActivity(this, processBA, wl, false))
 		    BA.handler.postDelayed(wl, 5);
 
 	}
@@ -188,7 +191,7 @@ public class frmabout extends Activity implements B4AActivity{
 			this.eventName = eventName;
 		}
 		public boolean onMenuItemClick(android.view.MenuItem item) {
-			processBA.raiseEvent(item.getTitle(), eventName + "_click");
+			processBA.raiseEventFromUI(item.getTitle(), eventName + "_click");
 			return true;
 		}
 	}
@@ -199,6 +202,8 @@ public class frmabout extends Activity implements B4AActivity{
     private Boolean onKeyUpSubExist = null;
 	@Override
 	public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
+        if (processBA.runHook("onkeydown", this, new Object[] {keyCode, event}))
+            return true;
 		if (onKeySubExist == null)
 			onKeySubExist = processBA.subExists("activity_keypress");
 		if (onKeySubExist) {
@@ -237,6 +242,8 @@ public class frmabout extends Activity implements B4AActivity{
 	}
     @Override
 	public boolean onKeyUp(int keyCode, android.view.KeyEvent event) {
+        if (processBA.runHook("onkeyup", this, new Object[] {keyCode, event}))
+            return true;
 		if (onKeyUpSubExist == null)
 			onKeyUpSubExist = processBA.subExists("activity_keyup");
 		if (onKeyUpSubExist) {
@@ -255,13 +262,22 @@ public class frmabout extends Activity implements B4AActivity{
     @Override 
 	public void onPause() {
 		super.onPause();
-        if (_activity == null) //workaround for emulator bug (Issue 2423)
+        if (_activity == null)
             return;
+        if (this != mostCurrent)
+			return;
 		anywheresoftware.b4a.Msgbox.dismiss(true);
-        BA.LogInfo("** Activity (frmabout) Pause, UserClosed = " + activityBA.activity.isFinishing() + " **");
-        processBA.raiseEvent2(_activity, true, "activity_pause", false, activityBA.activity.isFinishing());		
-        processBA.setActivityPaused(true);
-        mostCurrent = null;
+        if (!dontPause)
+            BA.LogInfo("** Activity (frmabout) Pause, UserClosed = " + activityBA.activity.isFinishing() + " **");
+        else
+            BA.LogInfo("** Activity (frmabout) Pause event (activity is not paused). **");
+        if (mostCurrent != null)
+            processBA.raiseEvent2(_activity, true, "activity_pause", false, activityBA.activity.isFinishing());		
+        if (!dontPause) {
+            processBA.setActivityPaused(true);
+            mostCurrent = null;
+        }
+
         if (!activityBA.activity.isFinishing())
 			previousOne = new WeakReference<Activity>(this);
         anywheresoftware.b4a.Msgbox.isDismissing = false;
@@ -291,11 +307,14 @@ public class frmabout extends Activity implements B4AActivity{
     		this.activity = new WeakReference<Activity>(activity);
     	}
 		public void run() {
-			if (mostCurrent == null || mostCurrent != activity.get())
+            frmabout mc = mostCurrent;
+			if (mc == null || mc != activity.get())
 				return;
 			processBA.setActivityPaused(false);
             BA.LogInfo("** Activity (frmabout) Resume **");
-		    processBA.raiseEvent(mostCurrent._activity, "activity_resume", (Object[])null);
+            if (mc != mostCurrent)
+                return;
+		    processBA.raiseEvent(mc._activity, "activity_resume", (Object[])null);
 		}
     }
 	@Override
@@ -307,39 +326,58 @@ public class frmabout extends Activity implements B4AActivity{
 	private static void initializeGlobals() {
 		processBA.raiseEvent2(null, true, "globals", false, (Object[])null);
 	}
+    public void onRequestPermissionsResult(int requestCode,
+        String permissions[], int[] grantResults) {
+        for (int i = 0;i < permissions.length;i++) {
+            Object[] o = new Object[] {permissions[i], grantResults[i] == 0};
+            processBA.raiseEventFromDifferentThread(null,null, 0, "activity_permissionresult", true, o);
+        }
+            
+    }
 
 public anywheresoftware.b4a.keywords.Common __c = null;
-public anywheresoftware.b4a.objects.LabelWrapper _label2 = null;
-public anywheresoftware.b4a.objects.ButtonWrapper _btncomenzar = null;
-public anywheresoftware.b4a.objects.LabelWrapper _label3 = null;
-public anywheresoftware.b4a.objects.LabelWrapper _label1 = null;
-public anywheresoftware.b4a.objects.ButtonWrapper _btnpuntuarapp = null;
-public anywheresoftware.b4a.objects.LabelWrapper _label5 = null;
-public anywheresoftware.b4a.samples.httputils2.httputils2service _httputils2service = null;
+public anywheresoftware.b4a.phone.Phone.PhoneIntents _p = null;
+public anywheresoftware.b4a.objects.LabelWrapper _lblversion = null;
+public anywheresoftware.b4a.objects.ImageViewWrapper _fcbicon = null;
+public anywheresoftware.b4a.objects.ImageViewWrapper _imgcc = null;
+public anywheresoftware.b4a.objects.TabStripViewPager _tabstripmain = null;
+public anywheresoftware.b4a.objects.LabelWrapper _lblteam = null;
+public anywheresoftware.b4a.objects.LabelWrapper _lbllicencia = null;
+public anywheresoftware.b4a.objects.LabelWrapper _lblmaintext = null;
 public ilpla.appear.main _main = null;
-public ilpla.appear.frmprincipal _frmprincipal = null;
-public ilpla.appear.frmevaluacion _frmevaluacion = null;
-public ilpla.appear.utilidades _utilidades = null;
-public ilpla.appear.game_ciclo _game_ciclo = null;
-public ilpla.appear.game_sourcepoint _game_sourcepoint = null;
-public ilpla.appear.game_comunidades _game_comunidades = null;
-public ilpla.appear.game_trofica _game_trofica = null;
-public ilpla.appear.aprender_tipoagua _aprender_tipoagua = null;
-public ilpla.appear.frmaprender _frmaprender = null;
-public ilpla.appear.frmresultados _frmresultados = null;
-public ilpla.appear.frmhabitatestuario _frmhabitatestuario = null;
-public ilpla.appear.game_ahorcado _game_ahorcado = null;
-public ilpla.appear.aprender_factores _aprender_factores = null;
-public ilpla.appear.frmminigames _frmminigames = null;
-public ilpla.appear.frmhabitatrio _frmhabitatrio = null;
-public ilpla.appear.frmhabitatlaguna _frmhabitatlaguna = null;
 public ilpla.appear.frmperfil _frmperfil = null;
-public ilpla.appear.envioarchivos _envioarchivos = null;
-public ilpla.appear.frmcamara _frmcamara = null;
+public ilpla.appear.utilidades _utilidades = null;
 public ilpla.appear.register _register = null;
+public ilpla.appear.aprender_memory _aprender_memory = null;
+public ilpla.appear.aprender_ahorcado _aprender_ahorcado = null;
+public ilpla.appear.starter _starter = null;
+public ilpla.appear.reporte_envio _reporte_envio = null;
+public ilpla.appear.aprender_ambientes _aprender_ambientes = null;
+public ilpla.appear.aprender_ciclo _aprender_ciclo = null;
+public ilpla.appear.aprender_comunidades _aprender_comunidades = null;
+public ilpla.appear.aprender_contaminacion _aprender_contaminacion = null;
+public ilpla.appear.aprender_factores _aprender_factores = null;
+public ilpla.appear.aprender_muestreo _aprender_muestreo = null;
+public ilpla.appear.aprender_trofica _aprender_trofica = null;
+public ilpla.appear.dbutils _dbutils = null;
+public ilpla.appear.downloadservice _downloadservice = null;
+public ilpla.appear.firebasemessaging _firebasemessaging = null;
+public ilpla.appear.form_main _form_main = null;
+public ilpla.appear.form_reporte _form_reporte = null;
+public ilpla.appear.frmdatosanteriores _frmdatosanteriores = null;
+public ilpla.appear.frmeditprofile _frmeditprofile = null;
+public ilpla.appear.frmfelicitaciones _frmfelicitaciones = null;
 public ilpla.appear.frmlocalizacion _frmlocalizacion = null;
-public ilpla.appear.frmtiporio _frmtiporio = null;
-public ilpla.appear.game_memory _game_memory = null;
+public ilpla.appear.frmlogin _frmlogin = null;
+public ilpla.appear.frmpoliticadatos _frmpoliticadatos = null;
+public ilpla.appear.httputils2service _httputils2service = null;
+public ilpla.appear.imagedownloader _imagedownloader = null;
+public ilpla.appear.inatcheck _inatcheck = null;
+public ilpla.appear.reporte_fotos _reporte_fotos = null;
+public ilpla.appear.reporte_habitat_estuario _reporte_habitat_estuario = null;
+public ilpla.appear.reporte_habitat_laguna _reporte_habitat_laguna = null;
+public ilpla.appear.reporte_habitat_rio _reporte_habitat_rio = null;
+public ilpla.appear.uploadfiles _uploadfiles = null;
 
 public static void initializeProcessGlobals() {
              try {
@@ -349,153 +387,142 @@ public static void initializeProcessGlobals() {
             }
 }
 public static String  _activity_create(boolean _firsttime) throws Exception{
- //BA.debugLineNum = 24;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
- //BA.debugLineNum = 26;BA.debugLine="Activity.LoadLayout(\"frmAbout\")";
-mostCurrent._activity.LoadLayout("frmAbout",mostCurrent.activityBA);
- //BA.debugLineNum = 27;BA.debugLine="TraducirGUI";
-_traducirgui();
- //BA.debugLineNum = 28;BA.debugLine="End Sub";
+ //BA.debugLineNum = 35;BA.debugLine="Sub Activity_Create(FirstTime As Boolean)";
+ //BA.debugLineNum = 38;BA.debugLine="Activity.LoadLayout(\"layAbout_Panels\")";
+mostCurrent._activity.LoadLayout("layAbout_Panels",mostCurrent.activityBA);
+ //BA.debugLineNum = 39;BA.debugLine="If Main.lang = \"es\" Then";
+if ((mostCurrent._main._lang /*String*/ ).equals("es")) { 
+ //BA.debugLineNum = 40;BA.debugLine="tabStripMain.LoadLayout(\"layAbout_Project\", \"El";
+mostCurrent._tabstripmain.LoadLayout("layAbout_Project",BA.ObjectToCharSequence("El proyecto"));
+ //BA.debugLineNum = 41;BA.debugLine="tabStripMain.LoadLayout(\"layAbout_People\", \"El e";
+mostCurrent._tabstripmain.LoadLayout("layAbout_People",BA.ObjectToCharSequence("El equipo"));
+ }else if((mostCurrent._main._lang /*String*/ ).equals("en")) { 
+ //BA.debugLineNum = 45;BA.debugLine="tabStripMain.LoadLayout(\"layAbout_Project\", \"The";
+mostCurrent._tabstripmain.LoadLayout("layAbout_Project",BA.ObjectToCharSequence("The project"));
+ //BA.debugLineNum = 46;BA.debugLine="tabStripMain.LoadLayout(\"layAbout_People\", \"The";
+mostCurrent._tabstripmain.LoadLayout("layAbout_People",BA.ObjectToCharSequence("The team"));
+ };
+ //BA.debugLineNum = 50;BA.debugLine="lblVersion.Text = Application.VersionCode";
+mostCurrent._lblversion.setText(BA.ObjectToCharSequence(anywheresoftware.b4a.keywords.Common.Application.getVersionCode()));
+ //BA.debugLineNum = 51;BA.debugLine="End Sub";
 return "";
 }
-public static boolean  _activity_keypress(int _keycode) throws Exception{
- //BA.debugLineNum = 38;BA.debugLine="Sub Activity_KeyPress (KeyCode As Int) As Boolean";
- //BA.debugLineNum = 39;BA.debugLine="If KeyCode = KeyCodes.KEYCODE_BACK Then";
-if (_keycode==anywheresoftware.b4a.keywords.Common.KeyCodes.KEYCODE_BACK) { 
- //BA.debugLineNum = 40;BA.debugLine="Activity.finish";
-mostCurrent._activity.Finish();
- //BA.debugLineNum = 41;BA.debugLine="Activity.RemoveAllViews";
-mostCurrent._activity.RemoveAllViews();
- };
- //BA.debugLineNum = 43;BA.debugLine="End Sub";
-return false;
-}
 public static String  _activity_pause(boolean _userclosed) throws Exception{
- //BA.debugLineNum = 34;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
- //BA.debugLineNum = 36;BA.debugLine="End Sub";
+ //BA.debugLineNum = 57;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+ //BA.debugLineNum = 59;BA.debugLine="End Sub";
 return "";
 }
 public static String  _activity_resume() throws Exception{
- //BA.debugLineNum = 30;BA.debugLine="Sub Activity_Resume";
- //BA.debugLineNum = 32;BA.debugLine="End Sub";
+ //BA.debugLineNum = 53;BA.debugLine="Sub Activity_Resume";
+ //BA.debugLineNum = 54;BA.debugLine="TranslateGUI";
+_translategui();
+ //BA.debugLineNum = 55;BA.debugLine="End Sub";
 return "";
 }
-public static String  _btncomenzar_click() throws Exception{
- //BA.debugLineNum = 65;BA.debugLine="Sub btnComenzar_Click";
- //BA.debugLineNum = 66;BA.debugLine="Activity.Finish";
+public static String  _btncerrarabout_click() throws Exception{
+ //BA.debugLineNum = 89;BA.debugLine="Sub btnCerrarAbout_Click";
+ //BA.debugLineNum = 90;BA.debugLine="Activity.RemoveAllViews";
+mostCurrent._activity.RemoveAllViews();
+ //BA.debugLineNum = 91;BA.debugLine="Activity.Finish";
 mostCurrent._activity.Finish();
- //BA.debugLineNum = 67;BA.debugLine="End Sub";
+ //BA.debugLineNum = 92;BA.debugLine="End Sub";
 return "";
 }
-public static String  _btnpuntuarapp_click() throws Exception{
-anywheresoftware.b4a.objects.IntentWrapper _market = null;
-String _uri = "";
- //BA.debugLineNum = 96;BA.debugLine="Sub btnPuntuarApp_Click";
- //BA.debugLineNum = 98;BA.debugLine="Dim market As Intent, uri As String";
-_market = new anywheresoftware.b4a.objects.IntentWrapper();
-_uri = "";
- //BA.debugLineNum = 99;BA.debugLine="uri=\"market://details?id=ilpla.appear\"";
-_uri = "market://details?id=ilpla.appear";
- //BA.debugLineNum = 100;BA.debugLine="market.Initialize(market.ACTION_VIEW,uri)";
-_market.Initialize(_market.ACTION_VIEW,_uri);
- //BA.debugLineNum = 101;BA.debugLine="StartActivity(market)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_market.getObject()));
- //BA.debugLineNum = 102;BA.debugLine="End Sub";
+public static String  _fcbicon_click() throws Exception{
+ //BA.debugLineNum = 94;BA.debugLine="Sub fcbIcon_Click";
+ //BA.debugLineNum = 95;BA.debugLine="StartActivity(p.OpenBrowser(\"https://www.facebook";
+anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._p.OpenBrowser("https://www.facebook.com/appeararg/")));
+ //BA.debugLineNum = 96;BA.debugLine="End Sub";
 return "";
 }
 public static String  _globals() throws Exception{
- //BA.debugLineNum = 12;BA.debugLine="Sub Globals";
- //BA.debugLineNum = 16;BA.debugLine="Private Label2 As Label";
-mostCurrent._label2 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 17;BA.debugLine="Private btnComenzar As Button";
-mostCurrent._btncomenzar = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 18;BA.debugLine="Private Label3 As Label";
-mostCurrent._label3 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 19;BA.debugLine="Private Label1 As Label";
-mostCurrent._label1 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 20;BA.debugLine="Private btnPuntuarApp As Button";
-mostCurrent._btnpuntuarapp = new anywheresoftware.b4a.objects.ButtonWrapper();
- //BA.debugLineNum = 21;BA.debugLine="Private Label5 As Label";
-mostCurrent._label5 = new anywheresoftware.b4a.objects.LabelWrapper();
- //BA.debugLineNum = 22;BA.debugLine="End Sub";
+ //BA.debugLineNum = 11;BA.debugLine="Sub Globals";
+ //BA.debugLineNum = 13;BA.debugLine="Dim p As PhoneIntents";
+mostCurrent._p = new anywheresoftware.b4a.phone.Phone.PhoneIntents();
+ //BA.debugLineNum = 14;BA.debugLine="Dim p As PhoneIntents";
+mostCurrent._p = new anywheresoftware.b4a.phone.Phone.PhoneIntents();
+ //BA.debugLineNum = 15;BA.debugLine="Private lblVersion As Label";
+mostCurrent._lblversion = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 17;BA.debugLine="Private fcbIcon As ImageView";
+mostCurrent._fcbicon = new anywheresoftware.b4a.objects.ImageViewWrapper();
+ //BA.debugLineNum = 18;BA.debugLine="Private imgCC As ImageView";
+mostCurrent._imgcc = new anywheresoftware.b4a.objects.ImageViewWrapper();
+ //BA.debugLineNum = 19;BA.debugLine="Private lblVersion As Label";
+mostCurrent._lblversion = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 24;BA.debugLine="Private tabStripMain As TabStrip";
+mostCurrent._tabstripmain = new anywheresoftware.b4a.objects.TabStripViewPager();
+ //BA.debugLineNum = 27;BA.debugLine="Private lblTeam As Label";
+mostCurrent._lblteam = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 29;BA.debugLine="Private lblLicencia As Label";
+mostCurrent._lbllicencia = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 30;BA.debugLine="Private lblMainText As Label";
+mostCurrent._lblmaintext = new anywheresoftware.b4a.objects.LabelWrapper();
+ //BA.debugLineNum = 33;BA.debugLine="End Sub";
 return "";
 }
-public static String  _imageview1_click() throws Exception{
-anywheresoftware.b4a.phone.Phone.PhoneIntents _p = null;
- //BA.debugLineNum = 80;BA.debugLine="Sub ImageView1_Click";
- //BA.debugLineNum = 81;BA.debugLine="Dim p As PhoneIntents";
-_p = new anywheresoftware.b4a.phone.Phone.PhoneIntents();
- //BA.debugLineNum = 82;BA.debugLine="StartActivity(p.OpenBrowser(\"http://www.ilpla.";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_p.OpenBrowser("http://www.ilpla.edu.ar")));
- //BA.debugLineNum = 83;BA.debugLine="End Sub";
+public static String  _imgcc_click() throws Exception{
+ //BA.debugLineNum = 117;BA.debugLine="Sub imgCC_Click";
+ //BA.debugLineNum = 118;BA.debugLine="StartActivity(p.OpenBrowser(\"https://creativecomm";
+anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._p.OpenBrowser("https://creativecommons.org/licenses/by-nc/2.5/ar/")));
+ //BA.debugLineNum = 119;BA.debugLine="End Sub";
 return "";
 }
-public static String  _imageview2_click() throws Exception{
-anywheresoftware.b4a.objects.IntentWrapper _i = null;
- //BA.debugLineNum = 89;BA.debugLine="Sub ImageView2_Click";
- //BA.debugLineNum = 90;BA.debugLine="Dim i As Intent";
-_i = new anywheresoftware.b4a.objects.IntentWrapper();
- //BA.debugLineNum = 91;BA.debugLine="i.Initialize(i.ACTION_VIEW, \"http://m.faceboo";
-_i.Initialize(_i.ACTION_VIEW,"http://m.facebook.com/appeararg");
- //BA.debugLineNum = 92;BA.debugLine="StartActivity(i)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_i.getObject()));
- //BA.debugLineNum = 93;BA.debugLine="End Sub";
+public static String  _imgtwitter_click() throws Exception{
+ //BA.debugLineNum = 111;BA.debugLine="Sub imgTwitter_Click";
+ //BA.debugLineNum = 113;BA.debugLine="StartActivity(p.OpenBrowser(\"https://twitter.com/";
+anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._p.OpenBrowser("https://twitter.com/appeararg")));
+ //BA.debugLineNum = 114;BA.debugLine="End Sub";
 return "";
 }
 public static String  _label1_click() throws Exception{
-anywheresoftware.b4a.phone.Phone.PhoneIntents _p = null;
- //BA.debugLineNum = 70;BA.debugLine="Sub Label1_Click";
- //BA.debugLineNum = 71;BA.debugLine="Dim p As PhoneIntents";
-_p = new anywheresoftware.b4a.phone.Phone.PhoneIntents();
- //BA.debugLineNum = 72;BA.debugLine="StartActivity(p.OpenBrowser(\"http://www.app-ea";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_p.OpenBrowser("http://www.app-ear.com.ar")));
- //BA.debugLineNum = 73;BA.debugLine="End Sub";
+anywheresoftware.b4a.objects.IntentWrapper _market = null;
+String _uri = "";
+ //BA.debugLineNum = 102;BA.debugLine="Sub Label1_Click";
+ //BA.debugLineNum = 104;BA.debugLine="Dim market As Intent, uri As String";
+_market = new anywheresoftware.b4a.objects.IntentWrapper();
+_uri = "";
+ //BA.debugLineNum = 105;BA.debugLine="uri=\"market://details?id=ilpla.appear\"";
+_uri = "market://details?id=ilpla.appear";
+ //BA.debugLineNum = 106;BA.debugLine="market.Initialize(market.ACTION_VIEW,uri)";
+_market.Initialize(_market.ACTION_VIEW,_uri);
+ //BA.debugLineNum = 107;BA.debugLine="StartActivity(market)";
+anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(_market.getObject()));
+ //BA.debugLineNum = 108;BA.debugLine="End Sub";
 return "";
 }
-public static String  _label3_click() throws Exception{
-anywheresoftware.b4a.phone.Phone.Email _message = null;
- //BA.debugLineNum = 74;BA.debugLine="Sub Label3_Click";
- //BA.debugLineNum = 75;BA.debugLine="Dim Message As Email";
-_message = new anywheresoftware.b4a.phone.Phone.Email();
- //BA.debugLineNum = 76;BA.debugLine="Message.To.Add(\"info@app-ear.com.ar\")";
-_message.To.Add((Object)("info@app-ear.com.ar"));
- //BA.debugLineNum = 77;BA.debugLine="StartActivity(Message.GetIntent)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_message.GetIntent()));
- //BA.debugLineNum = 79;BA.debugLine="End Sub";
-return "";
-}
-public static String  _label4_click() throws Exception{
-anywheresoftware.b4a.objects.IntentWrapper _i = null;
- //BA.debugLineNum = 84;BA.debugLine="Sub Label4_Click";
- //BA.debugLineNum = 85;BA.debugLine="Dim i As Intent";
-_i = new anywheresoftware.b4a.objects.IntentWrapper();
- //BA.debugLineNum = 86;BA.debugLine="i.Initialize(i.ACTION_VIEW, \"http://m.faceboo";
-_i.Initialize(_i.ACTION_VIEW,"http://m.facebook.com/appeararg");
- //BA.debugLineNum = 87;BA.debugLine="StartActivity(i)";
-anywheresoftware.b4a.keywords.Common.StartActivity(mostCurrent.activityBA,(Object)(_i.getObject()));
- //BA.debugLineNum = 88;BA.debugLine="End Sub";
+public static String  _lblwebsite_click() throws Exception{
+ //BA.debugLineNum = 98;BA.debugLine="Sub lblWebSite_Click";
+ //BA.debugLineNum = 99;BA.debugLine="StartActivity(p.OpenBrowser(\"http://www.app-ear.c";
+anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._p.OpenBrowser("http://www.app-ear.com.ar")));
+ //BA.debugLineNum = 100;BA.debugLine="End Sub";
 return "";
 }
 public static String  _process_globals() throws Exception{
  //BA.debugLineNum = 6;BA.debugLine="Sub Process_Globals";
- //BA.debugLineNum = 10;BA.debugLine="End Sub";
+ //BA.debugLineNum = 9;BA.debugLine="End Sub";
 return "";
 }
-public static String  _traducirgui() throws Exception{
- //BA.debugLineNum = 52;BA.debugLine="Sub TraducirGUI";
- //BA.debugLineNum = 53;BA.debugLine="If Main.lang = \"en\" Then";
-if ((mostCurrent._main._lang).equals("en")) { 
- //BA.debugLineNum = 54;BA.debugLine="Label2.Text = \"AppEAR is a citizen science proje";
-mostCurrent._label2.setText((Object)("AppEAR is a citizen science project to evaluate the habitat quality of water bodies. By sending a short report and some photos, you can help science build a world map of habitat quality"));
- //BA.debugLineNum = 55;BA.debugLine="Label5.Text = \"If you like the app, please rate";
-mostCurrent._label5.setText((Object)("If you like the app, please rate it 5 stars in Google Play!"));
- //BA.debugLineNum = 56;BA.debugLine="btnPuntuarApp.Text = \"Rate now\"";
-mostCurrent._btnpuntuarapp.setText((Object)("Rate now"));
- //BA.debugLineNum = 57;BA.debugLine="btnComenzar.Text = \"Close\"";
-mostCurrent._btncomenzar.setText((Object)("Close"));
- //BA.debugLineNum = 58;BA.debugLine="Label3.Text = \"Developer: Joaquín Cochero - jcoc";
-mostCurrent._label3.setText((Object)("Developer: Joaquín Cochero - jcochero@ilpla.edu.ar"));
+public static String  _translategui() throws Exception{
+ //BA.debugLineNum = 61;BA.debugLine="Sub TranslateGUI";
+ //BA.debugLineNum = 62;BA.debugLine="If Main.lang = \"es\" Then";
+if ((mostCurrent._main._lang /*String*/ ).equals("es")) { 
+ //BA.debugLineNum = 63;BA.debugLine="lblTeam.Text = \"El equipo AppEAR\"";
+mostCurrent._lblteam.setText(BA.ObjectToCharSequence("El equipo AppEAR"));
+ //BA.debugLineNum = 64;BA.debugLine="lblLicencia.Text = \"Todos los datos enviados por";
+mostCurrent._lbllicencia.setText(BA.ObjectToCharSequence("Todos los datos enviados por los usuarios, a excepción de sus datos personales, serán compartidos bajo la licencia CC-BY-NC"));
+ //BA.debugLineNum = 65;BA.debugLine="lblMainText.Text = \"AppEAR es un proyecto de cie";
+mostCurrent._lblmaintext.setText(BA.ObjectToCharSequence("AppEAR es un proyecto de ciencia ciudadana para evaluar la calidad del hábitat de ribera de los cuerpos de agua."+anywheresoftware.b4a.keywords.Common.CRLF+"Por medio de una corta encuesta y unas fotografías, puedes analizar el estado del hábitat de tus ríos, arroyos, lagunas y estuarios."+anywheresoftware.b4a.keywords.Common.CRLF+"Los datos enviados por los científicos ciudadanos contribuyen a calibrar índices de calidad del agua y"+anywheresoftware.b4a.keywords.Common.CRLF+"a expandir nuestro conocimiento de estos ecosistemas! Además, cada evaluación que envíes te sumará puntos!"));
+ }else if((mostCurrent._main._lang /*String*/ ).equals("en")) { 
+ //BA.debugLineNum = 74;BA.debugLine="lblTeam.Text = \"AppEAR Team\"";
+mostCurrent._lblteam.setText(BA.ObjectToCharSequence("AppEAR Team"));
+ //BA.debugLineNum = 75;BA.debugLine="lblLicencia.Text = \"All data sent by users, exce";
+mostCurrent._lbllicencia.setText(BA.ObjectToCharSequence("All data sent by users, except any personal information, can be shared under a CC-BY-NC license"));
+ //BA.debugLineNum = 76;BA.debugLine="lblMainText.Text = \"AppEAR is a citizen science";
+mostCurrent._lblmaintext.setText(BA.ObjectToCharSequence("AppEAR is a citizen science project to analyze snd monitor habitat quality in freshwater bodies."+anywheresoftware.b4a.keywords.Common.CRLF+"Through a short interactive survey and photographs, you can analyze the habitat quality of rivers, streams, lakes and estuaries."+anywheresoftware.b4a.keywords.Common.CRLF+"All data collected by the citizen scientists will be used to further calibrate water quality indices and improve our knowledge of these ecosystems."+anywheresoftware.b4a.keywords.Common.CRLF+"Plus, you will be earning points!"));
+ //BA.debugLineNum = 80;BA.debugLine="lblMainText.Text = \"AppEAR is a free app, to gui";
+mostCurrent._lblmaintext.setText(BA.ObjectToCharSequence("AppEAR is a free app, to guide users in the identification of kissing bugs that might represent an epidemiological issue. With the help of the reports, the project generates open and free geographical maps of the distribution of kissing bugs. All information collected by the “AppEAR” team, also shown in the maps was collected from museums, articles and data collected by the Laboratorio de Triatominos of the Centro de Estudios Parasitológicos y de Vectores (CEPAVE, Argentina)."));
  };
- //BA.debugLineNum = 62;BA.debugLine="End Sub";
+ //BA.debugLineNum = 85;BA.debugLine="End Sub";
 return "";
 }
 }
