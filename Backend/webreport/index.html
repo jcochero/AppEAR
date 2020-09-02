@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <!-- <meta name="generator" content="jqueryform.com"> -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title> AppEAR - Ciencia ciudadana en ambientes acuáticos - Reporte Web</title>
+  
+
+  <!-- Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+  
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link href="vendor.css" rel="stylesheet">
+
+  
+<!-- MAPA NUEVO-->
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+<!-- FIN MAPA NUEVO-->
+
+  
+  
+  
+<style type="text/css">
+body{
+  background-color: transparent;
+}
+
+.jf-form{
+  margin-top: 28px;
+}
+
+.jf-form > form{
+  margin-bottom: 32px;
+}
+
+.jf-option-box{
+  display: none;
+  margin-left: 8px;
+}
+
+.jf-hide{
+  display: none;
+}
+
+.jf-disabled {
+    background-color: #eeeeee;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* 
+overwrite bootstrap default margin-left, because the <label> doesn't contain the <input> element.
+*/
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+  position: absolute;
+  margin-top: 4px \9;
+  margin-left: 0px;
+}
+
+div.form-group{
+  padding: 8px 8px 4px 8px;
+}
+
+.mainDescription{
+  margin-bottom: 10px;
+}
+
+p.description{
+  margin:0px;
+}
+
+.responsive img{
+  width: 100%;
+}
+
+p.error, p.validation-error{
+  padding: 5px;
+}
+
+p.error{
+  margin-top: 10px;
+  color:#a94442;
+}
+
+p.server-error{
+  font-weight: bold;
+}
+
+div.thumbnail{
+  position: relative;
+  text-align: center;
+}
+
+div.thumbnail.selected p{
+  color: #ffffff;
+}
+
+div.thumbnail .glyphicon-ok-circle{
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  color: #ffffff;
+  font-size: 32px;
+}
+
+.jf-copyright{color: #888888; display: inline-block; margin: 16px;display:none;}
+
+.form-group.required .control-label:after {
+    color: #dd0000;
+    content: "*";
+    margin-left: 6px;
+}
+
+.submit .btn.disabled, .submit .btn[disabled]{
+  background: transparent;
+  opacity: 0.75;
+}
+
+/* for image option with span text */
+.checkbox label > span, .radio label > span{
+  display: block;
+}
+
+.form-group.inline .control-label,
+.form-group.col-1 .control-label,
+.form-group.col-2 .control-label,
+.form-group.col-3 .control-label
+{
+  display: block;
+}
+
+.form-group.inline div.radio,
+.form-group.inline div.checkbox{
+  display: inline-block;
+}
+
+.form-group.col-1 div.radio,
+.form-group.col-1 div.checkbox{
+  display: block;
+}
+
+.form-group.col-2 div.radio,
+.form-group.col-2 div.checkbox{
+  display: inline-flex;
+  width: 48%;
+}
+
+.form-group.col-3 div.radio,
+.form-group.col-3 div.checkbox{
+  display: inline-flex;
+  width: 30%;
+}
+
+.clearfix:after {
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+</style>
+
+<style type="text/css">
+/**
+page navigation / page break / action bar styles
+*/
+		
+	.steps {
+		padding: 0;
+		overflow: hidden;
+	}
+	
+	.steps li { 
+		list-style: none;
+	    float: left;
+	    margin: 10px;
+	    display: inline-block;
+	    border-bottom-width: 2px;
+	}
+
+	.steps li.current { 
+	    border-bottom-style: solid;
+	    border-bottom-color: #337ab7; 
+	}
+
+	.steps span.pn-num{
+		border-radius: 50%;
+		width: 26px;
+		height: 26px;
+		line-height: 26px;
+		text-align: center;
+		color: black;
+		font-weight: bold;
+		margin-right: 10px;
+		display: inline-block;
+	}
+
+	.steps li.current span.pn-num{
+		background-color: #337ab7;
+		color: white;
+	}
+
+	ul.actions{
+		padding-left:0px;
+	}
+	.actions li {
+		list-style: none;
+	    float: left;
+	    margin: 0;
+	    padding: 0 18px 8px 10px;
+		position: relative;
+	}
+
+	.actions .numberText > label,
+	.actions .previous > a.link{
+		line-height: 46px;
+	}
+
+	.form-group.error-msg{
+		clear: both;
+	}
+
+	section.page{
+		display: none;
+	}
+
+	section.page.current{
+		display:block;
+	}
+			
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ----------------------------------------------- -->
+<div class="container jf-form">
+<form data-licenseKey="" name="jqueryform-76c922" id="jqueryform-76c922" action='update.php' method='post' enctype='multipart/form-data' novalidate autocomplete="on">
+<input type="hidden" name="method" value="validateForm">
+<input type="hidden" id="serverValidationFields" name="serverValidationFields" value="">
+
+		<ul class="steps" data-isButtonPrev="">
+
+				<li style=""
+					data-page-step="1"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="false"
+					data-page-fid="f4"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Inicio</label></a></li>
+
+
+				<li style="display:none;"
+					data-page-step="2"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="true"
+					data-page-fid="f9"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Río de montaña</label></a></li>
+
+
+				<li style="display:none;"
+					data-page-step="3"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="true"
+					data-page-fid="f10"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Río de llanura</label></a></li>
+
+
+				<li style="display:none;"
+					data-page-step="4"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="true"
+					data-page-fid="f11"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Estuario o playa</label></a></li>
+
+
+				<li style="display:none;"
+					data-page-step="5"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="true"
+					data-page-fid="f12"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Laguna</label></a></li>
+
+
+				<li style=""
+					data-page-step="6"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Siguiente"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="false"
+					data-page-fid="f73"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Fotos</label></a></li>
+
+
+				<li style=""
+					data-page-step="7"
+					data-page-label-previous="< Anterior"
+					data-page-label-next="Enviar"
+					data-page-label-number-text="{page} / 4"
+					data-page-disabled="false"
+					data-page-hidden="false"
+					data-page-fid="f0"
+
+				><a href="#" title=""><span class="pn-num bg-info"></span><label class="pn-title">Enviar</label></a></li>
+
+
+		</ul>		
+
+
+<!-- [ Start: page_break GENERAL] -->
+<section class="page f4" id="f4" data-fid="f4" >
+
+<div class="form-group f6 required" data-fid="f6">
+  <label class="control-label" for="f6">Ingresa tu email: (para que te contacte un revisor)</label>
+<input type="email" class="form-control" id="f6" name="username" value=""   
+    data-rule-email="true" 
+    data-rule-required="true"  />
+</div>
+
+
+<div class="form-group f7 required" data-fid="f7">
+  <label class="control-label" for="f7">¿En que fecha visitaste el lugar?</label>
+
+<div class="input-group date">
+<input type="text" class="form-control datepicker" id="f7" name="dateandtime" value=""   
+    data-rule-required="true"  
+  data-datepicker-format="dd-mm-yyyy" />
+<span class="input-group-addon right"><i class="glyphicon glyphicon-th"></i> </span></div>
+  
+</div>
+
+<div class="form-group required inline">
+	<p><h4>¿Adonde esta el sitio que quieres analizar?</h4></p>
+	<p>Haz click sobre el mapa para mover el marcador</p>
+	<div id="map" style="width: 800px; height: 400px; background: none" /></div><br> 
+	Latitud: <input id="lat" name="lat" style="width:10%" data-rule-required="true"/>
+    Longitud: <input id="lng" name="lng" style="width:10%" data-rule-required="true"/>
+</div>
+
+<div class="form-group f8 required inline" data-fid="tiporio">
+  <label class="control-label" for="tiporio">¿Qué tipo de ambiente es?</label>
+
+<div class="radio">
+  	<input  id="f8_1" name="tiporio" type="radio" value="montana" 
+    data-rule-required="true"  >
+  	<label  for="f8_1">
+  		Río de montaña
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f8_2" name="tiporio" type="radio" value="llanura"  >
+  	<label  for="f8_2">
+  		Río de llanura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f8_3" name="tiporio" type="radio" value="estuario"  >
+  	<label  for="f8_3">
+  		Estuario o playa
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f8_4" name="tiporio" type="radio" value="laguna"  >
+  	<label  for="f8_4">
+  		Laguna
+  	</label>
+  </div>
+
+  
+</div>
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break: Ríos de montaña ] -->
+<section class="page f9" id="f9" data-fid="f9" >
+<div class="form-group f41 " data-fid="f41">
+  <label class="control-label" for="f41">RÍO DE MONTAÑA: Por favor, contesta las siguientes preguntas</label>
+
+</div>
+
+<div class="form-group f14  inline" data-fid="f14">
+  <label class="control-label" for="f14">1.	La zona cercana al sitio del arroyo, ¿para qué se usa mayormente?</label>
+
+<div class="radio">
+  	<input  id="f14_1" name="valorind1"  type="radio" value="0"  >
+  	<label  for="f14_1">
+  		Es una zona industrial o minera
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f14_2" name="valorind1"  type="radio" value="2"  >
+  	<label  for="f14_2">
+  		Es una zona residencial muy urbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f14_3" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f14_3">
+  		Es una zona residencial suburbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f14_4" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f14_4">
+  		Es una zona agropecuaria
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f14_5" name="valorind1"  type="radio" value="10"  >
+  	<label  for="f14_5">
+  		Es una reserva, o una zona muy natural
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f14_6" name="valorind1"  type="radio" value="NS"  >
+  	<label  for="f14_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f16  inline" data-fid="f16">
+  <label class="control-label" for="f16">¿Hay ganado cerca del arroyo?</label>
+
+<div class="radio">
+  	<input  id="f16_1" name="valorind2"  type="radio" value="0"  >
+  	<label  for="f16_1">
+  		Si, hay un feedlot cerca
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f16_2" name="valorind2"  type="radio" value="2"  >
+  	<label  for="f16_2">
+  		Si, hay abundante y disperso
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f16_3" name="valorind2"  type="radio" value="4"  >
+  	<label  for="f16_3">
+  		Si, pero poco
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f16_4" name="valorind2"  type="radio" value="10"  >
+  	<label  for="f16_4">
+  		No, no hay ganado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f16_5" name="valorind2"  type="radio" value="NS"  >
+  	<label  for="f16_5">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f17  inline" data-fid="f17">
+  <label class="control-label" for="f17">¿Cómo es la vegetación de ribera?</label>
+
+<div class="radio">
+  	<input  id="f17_1" name="valorind3"  type="radio" value="10"  >
+  	<label  for="f17_1">
+  		Hay sólo plantas autóctonas
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f17_2" name="valorind3"  type="radio" value="5"  >
+  	<label  for="f17_2">
+  		Hay  árboles introducidos, caña o acacia negra
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f17_3" name="valorind3"  type="radio" value="1"  >
+  	<label  for="f17_3">
+  		Sin árboles o con poca agricultura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f17_4" name="valorind3"  type="radio" value="NS"  >
+  	<label  for="f17_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f18  inline" data-fid="f18">
+  <label class="control-label" for="f18">¿Hay plantas acuáticas?</label>
+
+<div class="radio">
+  	<input  id="f18_1" name="valorind4"  type="radio" value="10"  >
+  	<label  for="f18_1">
+  		Si, hay sumergidas en el agua y también en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f18_2" name="valorind4"  type="radio" value="5"  >
+  	<label  for="f18_2">
+  		Si, hay sumergidas en el agua, pero no hay en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f18_3" name="valorind4"  type="radio" value="0"  >
+  	<label  for="f18_3">
+  		No, de ningún tipo
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f18_4" name="valorind4"  type="radio" value="NS"  >
+  	<label  for="f18_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f19  inline" data-fid="f19">
+  <label class="control-label" for="f19">¿Es transparente el agua?</label>
+
+<div class="radio">
+  	<input  id="f19_1" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f19_1">
+  		Es transparente
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f19_2" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f19_2">
+  		Es marrón
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f19_3" name="valorind5"  type="radio" value="2"  >
+  	<label  for="f19_3">
+  		Es oscura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f19_4" name="valorind5"  type="radio" value="NS"  >
+  	<label  for="f19_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f20  inline" data-fid="f20">
+  <label class="control-label" for="f20">¿Tiene mal olor el agua?</label>
+
+<div class="radio">
+  	<input  id="f20_1" name="valorind6"  type="radio" value="10"  >
+  	<label  for="f20_1">
+  		Huele bien
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f20_2" name="valorind6"  type="radio" value="0"  >
+  	<label  for="f20_2">
+  		Huele mal
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f20_3" name="valorind6"  type="radio" value="NS"  >
+  	<label  for="f20_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+<div class="form-group f21  inline" data-fid="f21">
+  <label class="control-label" for="f21">¿Hay basura en la ribera?</label>
+
+<div class="radio">
+  	<input  id="f21_1" name="valorind7"  type="radio" value="10"  >
+  	<label  for="f21_1">
+  		Sin basura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f21_2" name="valorind7"  type="radio" value="5"  >
+  	<label  for="f21_2">
+  		Presente pero no abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f21_3" name="valorind7"  type="radio" value="0"  >
+  	<label  for="f21_3">
+  		Abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f21_4" name="valorind7"  type="radio" value="NS"  >
+  	<label  for="f21_4">
+  		No se
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f22  inline" data-fid="f22">
+  <label class="control-label" for="f22">¿Cómo es la corriente?</label>
+
+<div class="radio">
+  	<input  id="f22_1" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f22_1">
+  		Rápida
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f22_2" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f22_2">
+  		Lenta
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f22_3" name="valorind8"  type="radio" value="NS"  >
+  	<label  for="f22_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f23  inline" data-fid="f23">
+  <label class="control-label" for="f23">¿Esta desbordado el río? O en su cauce?</label>
+
+<div class="radio">
+  	<input  id="f23_1" name="valorind9"  type="radio" value="0"  >
+  	<label  for="f23_1">
+  		Desbordado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f23_2" name="valorind9"  type="radio" value="10"  >
+  	<label  for="f23_2">
+  		En su cauce
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f23_3" name="valorind9"  type="radio" value="NS"  >
+  	<label  for="f23_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f24  inline" data-fid="f24">
+  <label class="control-label" for="f24">¿Está canalizado o entubado?</label>
+
+<div class="radio">
+  	<input  id="f24_1" name="valorind10"  type="radio" value="0"  >
+  	<label  for="f24_1">
+  		Esta canalizado o entubado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f24_2" name="valorind10"  type="radio" value="10"  >
+  	<label  for="f24_2">
+  		No está canalizado ni entubado 
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f24_3" name="valorind10"  type="radio" value="NS"  >
+  	<label  for="f24_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f26 " data-fid="f26">
+  <label class="control-label" for="f26">El fondo del arroyo tiene:</label>
+
+<div class="checkbox">
+  	<input  id="f26_1" name="valorind11[]"  type="checkbox" value="+2.5" 
+     >
+  	<label  for="f26_1">
+  		Arcilla/Barro
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f26_2" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f26_2">
+  		Arena gruesa
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f26_3" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f26_3">
+  		Piedras o grava
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f26_4" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f26_4">
+  		Guijarros 
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f26_5" name="valorind11[]"  type="checkbox" value="Es artificial (cemento)"  >
+  	<label  for="f26_5">
+  		Es artificial (cemento)
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f26_6" name="valorind11[]"  type="checkbox" value="NS"  >
+  	<label  for="f26_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f27  inline" data-fid="f27">
+  <label class="control-label" for="f27">¿Cómo es la pendiente de las márgenes?</label>
+
+<div class="radio">
+  	<input  id="f27_1" name="valorind12"  type="radio" value="0"  >
+  	<label  for="f27_1">
+  		Muy pronunciada! (>45º)
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f27_2" name="valorind12"  type="radio" value="10"  >
+  	<label  for="f27_2">
+  		No muy pronuciada (<45º)
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f27_3" name="valorind12"  type="radio" value="NS"  >
+  	<label  for="f27_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f28  inline" data-fid="f28">
+  <label class="control-label" for="f28">¿Esta sombreado el arroyo?</label>
+
+<div class="radio">
+  	<input  id="f28_1" name="valorind13"  type="radio" value="10"  >
+  	<label  for="f28_1">
+  		Si, totalmente cubierto
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f28_2" name="valorind13"  type="radio" value="5"  >
+  	<label  for="f28_2">
+  		Si, un poco
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f28_3" name="valorind13"  type="radio" value="0"  >
+  	<label  for="f28_3">
+  		No está sombreado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f28_4" name="valorind13"  type="radio" value="NS"  >
+  	<label  for="f28_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break ] -->
+<section class="page f10" id="f10" data-fid="f10" >
+
+
+
+
+
+<div class="form-group f43 " data-fid="f43">
+  <label class="control-label" for="f43">RÍO DE LLANURA: Por favor, contesta las siguientes preguntas</label>
+
+
+  
+</div>
+
+
+
+
+<div class="form-group f29  inline" data-fid="f29">
+  <label class="control-label" for="f29">La zona cercana al sitio del arroyo, ¿para qué se usa mayormente?</label>
+
+<div class="radio">
+  	<input  id="f29_1" name="valorind1"  type="radio" value="0"  >
+  	<label  for="f29_1">
+  		Es una zona industrial o minera
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f29_2" name="valorind1"  type="radio" value="2"  >
+  	<label  for="f29_2">
+  		Es una zona residencial muy urbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f29_3" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f29_3">
+  		Es una zona residencial suburbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f29_4" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f29_4">
+  		Es una zona agropecuaria
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f29_5" name="valorind1"  type="radio" value="10"  >
+  	<label  for="f29_5">
+  		Es una reserva, o una zona muy natural
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f29_6" name="valorind1"  type="radio" value="NS"  >
+  	<label  for="f29_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f30  inline" data-fid="f30">
+  <label class="control-label" for="f30">¿Hay ganado cerca del arroyo?</label>
+
+<div class="radio">
+  	<input  id="f30_1" name="valorind2"  type="radio" value="0"  >
+  	<label  for="f30_1">
+  		Si, hay un feedlot cerca
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f30_2" name="valorind2"  type="radio" value="2"  >
+  	<label  for="f30_2">
+  		Si, hay abundante y disperso
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f30_3" name="valorind2"  type="radio" value="4"  >
+  	<label  for="f30_3">
+  		Si, pero poco
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f30_4" name="valorind2"  type="radio" value="10"  >
+  	<label  for="f30_4">
+  		No, no hay ganado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f30_5" name="valorind2"  type="radio" value="NS"  >
+  	<label  for="f30_5">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f31  inline" data-fid="f31">
+  <label class="control-label" for="f31">¿Cómo es la vegetación de ribera?</label>
+
+<div class="radio">
+  	<input  id="f31_1" name="valorind3"  type="radio" value="10"  >
+  	<label  for="f31_1">
+  		Hay sólo plantas autóctonas
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f31_2" name="valorind3"  type="radio" value="5"  >
+  	<label  for="f31_2">
+  		Hay  árboles introducidos, caña o acacia negra
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f31_3" name="valorind3"  type="radio" value="1"  >
+  	<label  for="f31_3">
+  		Sin árboles o con poca agricultura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f31_4" name="valorind3"  type="radio" value="NS"  >
+  	<label  for="f31_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f32  inline" data-fid="f32">
+  <label class="control-label" for="f32">¿Hay plantas acuáticas?</label>
+
+<div class="radio">
+  	<input  id="f32_1" name="valorind4"  type="radio" value="10"  >
+  	<label  for="f32_1">
+  		Si, hay sumergidas en el agua y también en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f32_2" name="valorind4"  type="radio" value="5"  >
+  	<label  for="f32_2">
+  		Si, hay sumergidas en el agua, pero no hay en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f32_3" name="valorind4"  type="radio" value="0"  >
+  	<label  for="f32_3">
+  		No, de ningún tipo
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f32_4" name="valorind4"  type="radio" value="NS"  >
+  	<label  for="f32_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f33  inline" data-fid="f33">
+  <label class="control-label" for="f33">¿Es transparente el agua?</label>
+
+<div class="radio">
+  	<input  id="f33_1" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f33_1">
+  		Es transparente
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f33_2" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f33_2">
+  		Es marrón
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f33_3" name="valorind5"  type="radio" value="2"  >
+  	<label  for="f33_3">
+  		Es oscura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f33_4" name="valorind5"  type="radio" value="NS"  >
+  	<label  for="f33_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f34  inline" data-fid="f34">
+  <label class="control-label" for="f34">¿Tiene mal olor el agua?</label>
+
+<div class="radio">
+  	<input  id="f34_1" name="valorind6"  type="radio" value="10"  >
+  	<label  for="f34_1">
+  		Huele bien
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f34_2" name="valorind6"  type="radio" value="0"  >
+  	<label  for="f34_2">
+  		Huele mal
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f34_3" name="valorind6"  type="radio" value="NS"  >
+  	<label  for="f34_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f35  inline" data-fid="f35">
+  <label class="control-label" for="f35">¿Hay basura en la ribera?</label>
+
+<div class="radio">
+  	<input  id="f35_1" name="valorind7"  type="radio" value="10"  >
+  	<label  for="f35_1">
+  		Sin basura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f35_2" name="valorind7"  type="radio" value="5"  >
+  	<label  for="f35_2">
+  		Presente pero no abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f35_3" name="valorind7"  type="radio" value="0"  >
+  	<label  for="f35_3">
+  		Abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f35_4" name="valorind7"  type="radio" value="NS"  >
+  	<label  for="f35_4">
+  		No se
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f36  inline" data-fid="f36">
+  <label class="control-label" for="f36">¿Cómo es la corriente?</label>
+
+<div class="radio">
+  	<input  id="f36_1" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f36_1">
+  		Rápida
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f36_2" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f36_2">
+  		Lenta
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f36_3" name="valorind8"  type="radio" value="NS"  >
+  	<label  for="f36_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f37  inline" data-fid="f37">
+  <label class="control-label" for="f37">¿Esta desbordado el río? O en su cauce?</label>
+
+<div class="radio">
+  	<input  id="f37_1" name="valorind9"  type="radio" value="0"  >
+  	<label  for="f37_1">
+  		Desbordado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f37_2" name="valorind9"  type="radio" value="10"  >
+  	<label  for="f37_2">
+  		En su cauce
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f37_3" name="valorind9"  type="radio" value="NS"  >
+  	<label  for="f37_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f38  inline" data-fid="f38">
+  <label class="control-label" for="f38">¿Está canalizado o entubado?</label>
+
+<div class="radio">
+  	<input  id="f38_1" name="valorind10"  type="radio" value="0"  >
+  	<label  for="f38_1">
+  		Esta canalizado o entubado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f38_2" name="valorind10"  type="radio" value="10"  >
+  	<label  for="f38_2">
+  		No está canalizado ni entubado 
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f38_3" name="valorind10"  type="radio" value="NS"  >
+  	<label  for="f38_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f39 " data-fid="f39">
+  <label class="control-label" for="f39">El fondo del arroyo tiene:</label>
+
+<div class="checkbox">
+  	<input  id="f39_1" name="valorind11[]"  type="checkbox" value="+2.5" 
+     >
+  	<label  for="f39_1">
+  		Arcilla/Barro
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f39_2" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f39_2">
+  		Arena gruesa
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f39_3" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f39_3">
+  		Piedras o grava
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f39_4" name="valorind11[]"  type="checkbox" value="+2.5"  >
+  	<label  for="f39_4">
+  		Guijarros 
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f39_5" name="valorind11[]"  type="checkbox" value="0"  >
+  	<label  for="f39_5">
+  		Es artificial (cemento)
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f39_6" name="valorind11[]"  type="checkbox" value="NS"  >
+  	<label  for="f39_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f40  inline" data-fid="f40">
+  <label class="control-label" for="f40">¿Cómo es la pendiente de las márgenes?</label>
+
+<div class="radio">
+  	<input  id="f40_1" name="valorind12"  type="radio" value="0"  >
+  	<label  for="f40_1">
+  		Muy pronunciada! (>45º)
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f40_2" name="valorind12"  type="radio" value="10"  >
+  	<label  for="f40_2">
+  		No muy pronuciada (<45º)
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f40_3" name="valorind12"  type="radio" value="NS"  >
+  	<label  for="f40_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break ] -->
+<section class="page f11" id="f11" data-fid="f11" >
+
+
+
+
+
+<div class="form-group f42 " data-fid="f42">
+  <label class="control-label" for="f42">ESTUARIOS / PLAYAS: Por favor, contesta las siguientes preguntas</label>
+
+
+  
+</div>
+
+
+
+
+<div class="form-group f45  inline" data-fid="f45">
+  <label class="control-label" for="f45">La zona cercana al sitio del sitio, ¿para qué se usa mayormente?</label>
+
+<div class="radio">
+  	<input  id="f45_1" name="valorind1"  type="radio" value="0"  >
+  	<label  for="f45_1">
+  		Es una zona industrial o minera
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f45_2" name="valorind1"  type="radio" value="2"  >
+  	<label  for="f45_2">
+  		Es una zona residencial muy urbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f45_3" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f45_3">
+  		Es una zona residencial suburbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f45_4" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f45_4">
+  		Es una zona agropecuaria
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f45_5" name="valorind1"  type="radio" value="10"  >
+  	<label  for="f45_5">
+  		Es una reserva, o una zona muy natural
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f45_6" name="valorind1"  type="radio" value="NS"  >
+  	<label  for="f45_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f46  inline" data-fid="f46">
+  <label class="control-label" for="f46">¿Hay ganado cerca del sitio?</label>
+
+<div class="radio">
+  	<input  id="f46_1" name="valorind2"  type="radio" value="0"  >
+  	<label  for="f46_1">
+  		Si, hay un feedlot cerca
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f46_2" name="valorind2"  type="radio" value="2"  >
+  	<label  for="f46_2">
+  		Si, hay abundante y disperso
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f46_3" name="valorind2"  type="radio" value="4"  >
+  	<label  for="f46_3">
+  		Si, pero poco
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f46_4" name="valorind2"  type="radio" value="10"  >
+  	<label  for="f46_4">
+  		No, no hay ganado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f46_5" name="valorind2"  type="radio" value="NS"  >
+  	<label  for="f46_5">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f47  inline" data-fid="f47">
+  <label class="control-label" for="f47">¿Cómo es la vegetación de ribera?</label>
+
+<div class="radio">
+  	<input  id="f47_1" name="valorind3"  type="radio" value="10"  >
+  	<label  for="f47_1">
+  		Hay sólo plantas autóctonas
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f47_2" name="valorind3"  type="radio" value="5"  >
+  	<label  for="f47_2">
+  		Hay  árboles introducidos, caña o acacia negra
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f47_3" name="valorind3"  type="radio" value="1"  >
+  	<label  for="f47_3">
+  		Sin árboles o con poca agricultura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f47_4" name="valorind3"  type="radio" value="NS"  >
+  	<label  for="f47_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f48  inline" data-fid="f48">
+  <label class="control-label" for="f48">¿Hay plantas acuáticas?</label>
+
+<div class="radio">
+  	<input  id="f48_1" name="valorind4"  type="radio" value="10"  >
+  	<label  for="f48_1">
+  		Si, hay sumergidas en el agua y también en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f48_2" name="valorind4"  type="radio" value="5"  >
+  	<label  for="f48_2">
+  		Si, hay sumergidas en el agua, pero no hay en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f48_3" name="valorind4"  type="radio" value="0"  >
+  	<label  for="f48_3">
+  		No, de ningún tipo
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f48_4" name="valorind4"  type="radio" value="NS"  >
+  	<label  for="f48_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f49  inline" data-fid="f49">
+  <label class="control-label" for="f49">¿Es transparente el agua?</label>
+
+<div class="radio">
+  	<input  id="f49_1" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f49_1">
+  		Es transparente
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f49_2" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f49_2">
+  		Es marrón
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f49_3" name="valorind5"  type="radio" value="2"  >
+  	<label  for="f49_3">
+  		Es oscura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f49_4" name="valorind5"  type="radio" value="NS"  >
+  	<label  for="f49_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f50  inline" data-fid="f50">
+  <label class="control-label" for="f50">¿Tiene mal olor el agua?</label>
+
+<div class="radio">
+  	<input  id="f50_1" name="valorind6"  type="radio" value="10"  >
+  	<label  for="f50_1">
+  		Huele bien
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f50_2" name="valorind6"  type="radio" value="0"  >
+  	<label  for="f50_2">
+  		Huele mal
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f50_3" name="valorind6"  type="radio" value="NS"  >
+  	<label  for="f50_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f51  inline" data-fid="f51">
+  <label class="control-label" for="f51">¿Hay basura en la costa?</label>
+
+<div class="radio">
+  	<input  id="f51_1" name="valorind7"  type="radio" value="10"  >
+  	<label  for="f51_1">
+  		Sin basura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f51_2" name="valorind7"  type="radio" value="5"  >
+  	<label  for="f51_2">
+  		Presente pero no abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f51_3" name="valorind7"  type="radio" value="0"  >
+  	<label  for="f51_3">
+  		Abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f51_4" name="valorind7"  type="radio" value="NS"  >
+  	<label  for="f51_4">
+  		No se
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f52  inline" data-fid="f52">
+  <label class="control-label" for="f52">¿Hay juncales en la costa?</label>
+
+<div class="radio">
+  	<input  id="f52_1" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f52_1">
+  		Si hay juncales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f52_2" name="valorind8"  type="radio" value="5"  >
+  	<label  for="f52_2">
+  		Si aislados
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f52_3" name="valorind8"  type="radio" value="0"  >
+  	<label  for="f52_3">
+  		No, no hay juncales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f52_4" name="valorind8"  type="radio" value="NS"  >
+  	<label  for="f52_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f53  inline" data-fid="f53">
+  <label class="control-label" for="f53">¿Hay pajonales en la costa?</label>
+
+<div class="radio">
+  	<input  id="f53_1" name="valorind9"  type="radio" value="10"  >
+  	<label  for="f53_1">
+  		Si hay pajonales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f53_2" name="valorind9"  type="radio" value="5"  >
+  	<label  for="f53_2">
+  		Si aislados
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f53_3" name="valorind9"  type="radio" value="0"  >
+  	<label  for="f53_3">
+  		No, no hay pajonales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f53_4" name="valorind9"  type="radio" value="NS"  >
+  	<label  for="f53_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f54  inline" data-fid="f54">
+  <label class="control-label" for="f54">¿Hay árboles en la costa?</label>
+
+<div class="radio">
+  	<input  id="f54_1" name="valorind10"  type="radio" value="10"  >
+  	<label  for="f54_1">
+  		Si, abundantes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f54_2" name="valorind10"  type="radio" value="0"  >
+  	<label  for="f54_2">
+  		No, no hay árboles
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f54_3" name="valorind10"  type="radio" value="NS"  >
+  	<label  for="f54_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f55  inline" data-fid="f55">
+  <label class="control-label" for="f55">¿Hay murallas en la costa?</label>
+
+<div class="radio">
+  	<input  id="f55_1" name="valorind11"  type="radio" value="0"  >
+  	<label  for="f55_1">
+  		Si, hay una muralla a lo largo de la costa
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f55_2" name="valorind11"  type="radio" value="10"  >
+  	<label  for="f55_2">
+  		No, no hay una muralla
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f55_3" name="valorind11"  type="radio" value="NS"  >
+  	<label  for="f55_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f56  inline" data-fid="f56">
+  <label class="control-label" for="f56">¿Hay muelles o escolleras cerca?</label>
+
+<div class="radio">
+  	<input  id="f56_1" name="valorind12"  type="radio" value="5"  >
+  	<label  for="f56_1">
+  		Si, hay muelles
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f56_2" name="valorind12"  type="radio" value="10"  >
+  	<label  for="f56_2">
+  		No, no hay nada
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f56_3" name="valorind12"  type="radio" value="NS"  >
+  	<label  for="f56_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f57  inline" data-fid="f57">
+  <label class="control-label" for="f57">¿Hay edificaciones temporarias?</label>
+
+<div class="radio">
+  	<input  id="f57_1" name="valorind13"  type="radio" value="5"  >
+  	<label  for="f57_1">
+  		Si, hay algunas casillas o campings
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f57_2" name="valorind13"  type="radio" value="10"  >
+  	<label  for="f57_2">
+  		No, no hay nada
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f57_3" name="valorind13"  type="radio" value="NS"  >
+  	<label  for="f57_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f58  inline" data-fid="f58">
+  <label class="control-label" for="f58">¿Hay escombros en la costa?</label>
+
+<div class="radio">
+  	<input  id="f58_1" name="valorind14"  type="radio" value="0"  >
+  	<label  for="f58_1">
+  		Si, hay escombros por toda la costa
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f58_2" name="valorind14"  type="radio" value="10"  >
+  	<label  for="f58_2">
+  		No, no hay escombros
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f58_3" name="valorind14"  type="radio" value="NS"  >
+  	<label  for="f58_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break ] -->
+<section class="page f12" id="f12" data-fid="f12" >
+
+
+
+
+
+<div class="form-group f44 " data-fid="f44">
+  <label class="control-label" for="f44">LAGUNAS: Por favor, contesta las siguientes preguntas</label>
+
+
+  
+</div>
+
+
+
+
+<div class="form-group f59  inline" data-fid="f59">
+  <label class="control-label" for="f59">La zona cercana al sitio, ¿para qué se usa mayormente?</label>
+
+<div class="radio">
+  	<input  id="f59_1" name="valorind1"  type="radio" value="0"  >
+  	<label  for="f59_1">
+  		Es una zona industrial o minera
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f59_2" name="valorind1"  type="radio" value="2"  >
+  	<label  for="f59_2">
+  		Es una zona residencial muy urbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f59_3" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f59_3">
+  		Es una zona residencial suburbana
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f59_4" name="valorind1"  type="radio" value="4"  >
+  	<label  for="f59_4">
+  		Es una zona agropecuaria
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f59_5" name="valorind1"  type="radio" value="10"  >
+  	<label  for="f59_5">
+  		Es una reserva, o una zona muy natural
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f59_6" name="valorind1"  type="radio" value="NS"  >
+  	<label  for="f59_6">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f60  inline" data-fid="f60">
+  <label class="control-label" for="f60">¿Hay ganado cerca del lugar?</label>
+
+<div class="radio">
+  	<input  id="f60_1" name="valorind2"  type="radio" value="0"  >
+  	<label  for="f60_1">
+  		Si, hay un feedlot cerca
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f60_2" name="valorind2"  type="radio" value="2"  >
+  	<label  for="f60_2">
+  		Si, hay abundante y disperso
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f60_3" name="valorind2"  type="radio" value="4"  >
+  	<label  for="f60_3">
+  		Si, pero poco
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f60_4" name="valorind2"  type="radio" value="10"  >
+  	<label  for="f60_4">
+  		No, no hay ganado
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f60_5" name="valorind2"  type="radio" value="NS"  >
+  	<label  for="f60_5">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f61  inline" data-fid="f61">
+  <label class="control-label" for="f61">¿Cómo es la vegetación de ribera?</label>
+
+<div class="radio">
+  	<input  id="f61_1" name="valorind3"  type="radio" value="10"  >
+  	<label  for="f61_1">
+  		Hay sólo plantas autóctonas
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f61_2" name="valorind3"  type="radio" value="5"  >
+  	<label  for="f61_2">
+  		Hay  árboles introducidos, caña o acacia negra
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f61_3" name="valorind3"  type="radio" value="1"  >
+  	<label  for="f61_3">
+  		Sin árboles o con poca agricultura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f61_4" name="valorind3"  type="radio" value="NS"  >
+  	<label  for="f61_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f62  inline" data-fid="f62">
+  <label class="control-label" for="f62">¿Hay plantas acuáticas?</label>
+
+<div class="radio">
+  	<input  id="f62_1" name="valorind4"  type="radio" value="10"  >
+  	<label  for="f62_1">
+  		Si, hay sumergidas en el agua y también en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f62_2" name="valorind4"  type="radio" value="5"  >
+  	<label  for="f62_2">
+  		Si, hay sumergidas en el agua, pero no hay en las márgenes
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f62_3" name="valorind4"  type="radio" value="0"  >
+  	<label  for="f62_3">
+  		No, de ningún tipo
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f62_4" name="valorind4"  type="radio" value="NS"  >
+  	<label  for="f62_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f63  inline" data-fid="f63">
+  <label class="control-label" for="f63">¿Es transparente el agua?</label>
+
+<div class="radio">
+  	<input  id="f63_1" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f63_1">
+  		Es transparente
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f63_2" name="valorind5"  type="radio" value="10"  >
+  	<label  for="f63_2">
+  		Es marrón
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f63_3" name="valorind5"  type="radio" value="2"  >
+  	<label  for="f63_3">
+  		Es oscura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f63_4" name="valorind5"  type="radio" value="NS"  >
+  	<label  for="f63_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f64  inline" data-fid="f64">
+  <label class="control-label" for="f64">¿Tiene mal olor el agua?</label>
+
+<div class="radio">
+  	<input  id="f64_1" name="valorind6"  type="radio" value="10"  >
+  	<label  for="f64_1">
+  		Huele bien
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f64_2" name="valorind6"  type="radio" value="0"  >
+  	<label  for="f64_2">
+  		Huele mal
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f64_3" name="valorind6"  type="radio" value="NS"  >
+  	<label  for="f64_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f65  inline" data-fid="f65">
+  <label class="control-label" for="f65">¿Hay basura en la costa?</label>
+
+<div class="radio">
+  	<input  id="f65_1" name="valorind7"  type="radio" value="10"  >
+  	<label  for="f65_1">
+  		Sin basura
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f65_2" name="valorind7"  type="radio" value="5"  >
+  	<label  for="f65_2">
+  		Presente pero no abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f65_3" name="valorind7"  type="radio" value="0"  >
+  	<label  for="f65_3">
+  		Abundante
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f65_4" name="valorind7"  type="radio" value="NS"  >
+  	<label  for="f65_4">
+  		No se
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f66  inline" data-fid="f66">
+  <label class="control-label" for="f66">¿Hay juncales en la costa?</label>
+
+<div class="radio">
+  	<input  id="f66_1" name="valorind8"  type="radio" value="10"  >
+  	<label  for="f66_1">
+  		Si hay juncales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f66_2" name="valorind8"  type="radio" value="5"  >
+  	<label  for="f66_2">
+  		Si aislados
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f66_3" name="valorind8"  type="radio" value="0"  >
+  	<label  for="f66_3">
+  		No, no hay juncales
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f66_4" name="valorind8"  type="radio" value="NS"  >
+  	<label  for="f66_4">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f67  inline" data-fid="f67">
+  <label class="control-label" for="f67">¿Hay murallas en la costa?</label>
+
+<div class="radio">
+  	<input  id="f67_1" name="valorind9"  type="radio" value="0"  >
+  	<label  for="f67_1">
+  		Si, hay una muralla a lo largo de la costa
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f67_2" name="valorind9"  type="radio" value="10"  >
+  	<label  for="f67_2">
+  		No, no hay una muralla
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f67_3" name="valorind9"  type="radio" value="NS"  >
+  	<label  for="f67_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f68  inline" data-fid="f68">
+  <label class="control-label" for="f68">¿Hay muelles o escolleras cerca?</label>
+
+<div class="radio">
+  	<input  id="f68_1" name="valorind10"  type="radio" value="5"  >
+  	<label  for="f68_1">
+  		Si, hay muelles
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f68_2" name="valorind10"  type="radio" value="10"  >
+  	<label  for="f68_2">
+  		No, no hay nada
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f68_3" name="valorind10"  type="radio" value="NS"  >
+  	<label  for="f68_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f69  inline" data-fid="f69">
+  <label class="control-label" for="f69">¿Hay edificaciones temporarias?</label>
+
+<div class="radio">
+  	<input  id="f69_1" name="valorind11"  type="radio" value="5"  >
+  	<label  for="f69_1">
+  		Si, hay algunas casillas o campings
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f69_2" name="valorind11"  type="radio" value="10"  >
+  	<label  for="f69_2">
+  		No, no hay nada
+  	</label>
+  </div>
+
+  <div class="radio">
+  	<input  id="f69_3" name="valorind11"  type="radio" value="NS"  >
+  	<label  for="f69_3">
+  		No lo sé
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break ] -->
+<section class="page f73" id="f73" data-fid="f73" >
+
+
+
+
+
+<div class="form-group f74 required" data-fid="f74">
+  <label class="control-label" for="f74">Adjunta tus fotos del lugar (entre 1 y 4 fotos)</label>
+
+<input type="file" class="form-control" id="f74" name="f74[]" data-multiple="true" multiple value=""   
+    data-rule-required="true"  data-allowedFileExtensions="jpg" data-showUpload="false" data-showZoom="false"/>
+</div>
+<input id="foto1path" name="foto1path" readonly="true" value="" />
+<input id="foto2path" name="foto2path" readonly="true" value="" />
+<input id="foto3path" name="foto3path" readonly="true" value="" />
+<input id="foto4path" name="foto4path" readonly="true" value="" />
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+
+<!-- [ Start: page_break ] -->
+<section class="page f0" id="f0" data-fid="f0" >
+
+
+
+
+
+<div class="form-group f71 " data-fid="f71">
+  <label class="control-label" for="f71">¿Viste alguno de los siguientes?</label>
+
+<div class="checkbox">
+  	<input  id="f71_1" name="bingo[]"  type="checkbox" value="Ranas" 
+     >
+  	<label  for="f71_1">
+  		Ranas
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_2" name="bingo[]"  type="checkbox" value="Tortugas"  >
+  	<label  for="f71_2">
+  		Tortugas
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_3" name="bingo[]"  type="checkbox" value="Peces"  >
+  	<label  for="f71_3">
+  		Peces
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_4" name="bingo[]"  type="checkbox" value="Mosquitos"  >
+  	<label  for="f71_4">
+  		Mosquitos
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_5" name="bingo[]"  type="checkbox" value="Libélulas"  >
+  	<label  for="f71_5">
+  		Libélulas
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_6" name="bingo[]"  type="checkbox" value="Serpientes"  >
+  	<label  for="f71_6">
+  		Serpientes
+  	</label>
+  </div>
+
+  <div class="checkbox">
+  	<input  id="f71_7" name="bingo[]"  type="checkbox" value="Mamíferos"  >
+  	<label  for="f71_7">
+  		Mamíferos
+  	</label>
+  </div>
+
+  
+</div>
+
+
+
+
+<div class="form-group f72 " data-fid="f72">
+  <label class="control-label" for="f72">¿Quieres enviarnos alguna nota?</label>
+
+
+<textarea class="form-control" id="f72" name="notas" rows="3"   ></textarea>
+
+<input type="checkbox" name="privado" value="si" style="float: left; width: 10%; text-align: left;"> </span>
+<label for="privado" style="float: left; width: 75%; text-align: left;">Deseo que este dato no sea mostrado en el mapa de AppEAR</label>
+</div>
+
+
+
+
+
+<div class='form-group recaptcha'>
+  <script type="text/javascript">
+  	function renderReCaptcha(){
+  		var jfKey = '6LdopwYTAAAAABunoQoWr5mZGVpVSmTFumNM8ZfO', 
+  		realKey = '6LfwPHcUAAAAAGct6jGIrSslcNiLoWGUWNy3URxx',
+  		theme = 'light',
+  		key = -1 !== location.href.indexOf('jqueryform.com/') ? jfKey : realKey;
+  		grecaptcha.render( document.getElementById('g-recaptcha'), {
+          'sitekey' : key,
+          'theme' : theme
+        });
+  	};
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js?hl=&onload=renderReCaptcha&render=explicit" async defer></script>
+  <div id='g-recaptcha' class='g-recaptcha col_field' data-theme='light' data-sitekey='6LfwPHcUAAAAAGct6jGIrSslcNiLoWGUWNy3URxx'></div>
+</div>
+
+
+
+
+
+
+</section>
+<!-- [ End: page_break ] -->
+
+
+<div class="form-group">
+
+    <ul class="actions">
+      <li class="next"><a href="#" class="btn btn-primary btn-lg">Next</a></li>
+      <li class="submit">
+
+<div class=" submit f0 " data-fid="f0" style="position: relative;">
+  <label class="control-label sr-only" for="f0" style="display: block;">Submit Button</label>
+
+  <div class="progress" style="display: none; z-index: -1; position: absolute;">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:100%">
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg" style="z-index: 1;">
+  		Enviar
+  </button>
+
+</div>
+      </li>
+      <li class="previous"><a href="#" class="link">< Back</a></li>
+      <li class="numberText"><label></label></li>
+    </ul>
+
+</div>
+<div class="clearfix"></div>
+
+<div class="submit">
+  <p class="error bg-warning" style="display:none;">
+    Please check the required fields.  </p>
+</div>
+
+<div class="clearfix"></div>
+
+
+</form>
+
+</div>
+
+<div class="container jf-thankyou" style="display:none;" data-redirect="http%3A%2F%2Fwww.app-ear.com.ar" data-seconds="10">
+  <h3>Gracias por el envío de los datos! Un experto se contactará con usted por email para realizar la validación de los mismos!</h3>
+</div>
+<!-- ----------------------------------------------- -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/locales/bootstrap-datepicker.es.min.js"></script>
+<script type="text/javascript">
+	$.fn.datepicker.defaults.language = 'es';
+</script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
+<script src="vendor.js" ></script>
+
+<script src="jqueryform.com.min.js?ver=v2.1.4&id=jqueryform-76c922" ></script>
+
+
+
+
+<!-- [ Start: iCheck support ] ---------------------------------- -->
+<link href="https://cdn.jsdelivr.net/icheck/1.0.2/skins/flat/_all.min.css" rel="stylesheet">
+<style type="text/css">
+/* overwrite bootstrap styles */
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: relative;
+    margin-top: 0px;
+    margin-left: 2px;
+}
+
+.checkbox label, .radio label {
+   padding-left: 4px;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/icheck/1.0.2/icheck.min.js"></script>
+<script type="text/javascript">
+
+
+;(function ($, undefined)
+{
+
+var checkers = '.icheckbox_flat, .iradio_flat';
+
+function initICheck( $input ){
+  $input.iCheck({
+	    checkboxClass: 'icheckbox_flat',
+	    radioClass: 'iradio_flat'
+  }).on('ifClicked', function(e){
+    setTimeout( function(){
+      $(e.target).valid();
+      $(e.target).trigger('change').trigger('handleOptionBox');
+    }, 250);
+  });
+}; // func
+
+//$('.jf-form .checkbox, .jf-form .radio')
+$('.jf-form input[type="checkbox"], .jf-form input[type="radio"]').each( function( i, e ){
+    var $input = $(e), $div = $input.closest('.checkbox,.radio'), hasImg = $div.find('label > img').length;
+    if( hasImg ){
+
+        $input.css({ 'opacity': '0', 'position': 'absolute', 'left': '-1000px', 'right': '-1000px'} );
+
+    }else{
+
+        initICheck( $input );
+
+        // IE11 and under, the table-cell makes the checkboxes/radio buttons not clickable
+        var isWin = navigator.platform.indexOf('Win') > -1,
+            isEdge = navigator.userAgent.indexOf('Edge/') > -1,
+            noTableCell = isWin && !isEdge;
+        if( !noTableCell ){
+          $div.find('label').css( { display: 'table-cell' } );
+          $(checkers).css( { display: 'table-cell' } );
+        };
+
+    };
+});
+
+})(jQuery);
+
+</script>
+<!-- [ End: iCheck support ] ---------------------------------- -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.6/js/locales/es.min.js"></script>
+<script>
+// tell jquery fileinput plugin init with selected lanaguage
+fileinputLanguage = 'es';
+</script>
+
+
+<script type="text/javascript">
+
+	// start jqueryform initialization
+	// --------------------------------
+	JF.init('#jqueryform-76c922');
+
+	// watch form element change event to run jqueryform's formlogic
+	// ---------------------------------------------------------------
+	var logics = [
+    {
+        "disabled": false,
+        "action": "show",
+        "selector": "f9",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "montana"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "show",
+        "selector": "f10",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "llanura"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "show",
+        "selector": "f11",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "estuario"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "show",
+        "selector": "f12",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "laguna"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "hide",
+        "selector": "f10,f11,f12",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "montana"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "hide",
+        "selector": "f9,f11,f12",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "llanura"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "hide",
+        "selector": "f9,f10,f12",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "estuario"
+            }
+        ]
+    },
+    {
+        "disabled": false,
+        "action": "hide",
+        "selector": "f9,f10,f11",
+        "match": "all",
+        "rules": [
+            {
+                "disabled": false,
+                "selector": "tiporio",
+                "condition": "==",
+                "value": "laguna"
+            }
+        ]
+    }
+];
+	$('input,input:radio,select').change(function(){
+		$.formlogic( {logics: logics} );
+	});
+</script>
+
+<script type="text/javascript" src="newmap3.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+		    var files = event.target.files;
+			if (files.length == 1){
+				var fileName1 = files[0].name;
+				document.getElementById('foto1path').value=fileName1;
+				document.getElementById('foto2path').value="";
+				document.getElementById('foto3path').value="";
+				document.getElementById('foto4path').value="";
+				
+			} else if (files.length == 2){
+				var fileName1 = files[0].name;
+				var fileName2 = files[1].name;
+				document.getElementById('foto1path').value=fileName1;
+				document.getElementById('foto2path').value=fileName2;
+				document.getElementById('foto3path').value="";
+				document.getElementById('foto4path').value="";				
+			} else if (files.length==3){
+				var fileName3 = files[2].name;
+				var fileName1 = files[0].name;
+				var fileName2 = files[1].name;
+				document.getElementById('foto1path').value=fileName1;
+				document.getElementById('foto2path').value=fileName2;
+				document.getElementById('foto3path').value=fileName3;
+				document.getElementById('foto4path').value="";				
+			} else if (files.length==4){
+				var fileName3 = files[2].name;
+				var fileName1 = files[0].name;
+				var fileName2 = files[1].name;
+				document.getElementById('foto1path').value=fileName1;
+				document.getElementById('foto2path').value=fileName2;
+				document.getElementById('foto3path').value=fileName3;			
+				var fileName4 = files[3].name;
+				document.getElementById('foto4path').value=fileName4;
+			} else if (files.length==0){
+				document.getElementById('foto1path').value="";
+				document.getElementById('foto2path').value="";
+				document.getElementById('foto3path').value="";
+				document.getElementById('foto4path').value="";
+			}
+			
+		});
+    });
+</script>
+
+  </body>
+</html>
